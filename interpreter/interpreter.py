@@ -31,7 +31,7 @@ class Interpreter(object):
                 self.current_token = Token(SPACE, ' ')
 
             else:
-                symbol_error(self.input_text[self.pos])
+                symbol_error(symbol=self.input_text[self.pos])
 
             self.pos += 1
             return self.current_token
@@ -48,13 +48,12 @@ class Interpreter(object):
         num = ''
         while self.current_token.type == INT:
             num += self.current_token.value
-            self.token_match(INT)
+            self.token_match(token_type=INT)
         return int(num)
 
     def pass_space(self):
         while self.current_token.type is SPACE:
             self.token_advance()
-        return
 
     def expr(self):
         if self.current_token is None:
@@ -70,5 +69,15 @@ class Interpreter(object):
             self.pass_space()
             right = self.retrieve_num()
 
-            result = left + right
-            return result
+            if operator.type == PLUS:
+                return left + right
+            elif operator.type == MINUS:
+                return left - right
+            elif operator.type == MULTIPLY:
+                return left * right
+            elif operator.type == DIVIDE:
+                return left / right
+            elif operator.type == MOD:
+                return left % right
+
+            operator_error(type_=operator.type)

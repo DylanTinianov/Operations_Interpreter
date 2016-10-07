@@ -8,3 +8,7 @@ def symbol_error(symbol):
 
 def type_error(type_):
     raise Exception('Incorrect usage of type:', type_)
+
+
+def operator_error(type_):
+    raise Exception('Incorrect operator type:', type_)
