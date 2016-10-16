@@ -2,9 +2,9 @@
 This Software is a continuously running interpreter capable of computing and printing multiple integer operations
 
 ### Operations
-This Interpreter can compute the following:
+This Interpreter can compute the following: (listed in order of precedence)
 ```
-+ - * / %
+/ * % + -
 ```
 Standard order of operations will be followed
 
