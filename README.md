@@ -6,7 +6,7 @@ This Interpreter can compute the following:
 ```
 + - * / %
 ```
-Basic order of operations will be followed
+Standard order of operations will be followed
 
 ### Linux
 To run the interpreter, run the following in project root
