@@ -17,3 +17,11 @@ To exit the program, simply type 'exit':
 ```
 >>> exit
 ```
+
+#### Example Usage
+Input can be placed in any order, and spaces are ignored
+
+![alt text][example]
+
+
+[example]:https://github.com/DylanTinianov/Images/blob/master/Interpreter/example.png
