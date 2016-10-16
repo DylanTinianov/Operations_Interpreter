@@ -4,6 +4,9 @@ from interpreter import *
 def main():
     while True:
         interp_ = Interpreter(text=raw_input('>>> '))
+        if interp_.exit_interp():
+            break
+
         interp_.parse_input()
 
         while len(interp_.tokens) > 2:
