@@ -81,7 +81,6 @@ class Interpreter(object):
         token_types = list()
         for i in self.tokens:
             token_types.append(i.type)
-        print token_types
 
         for i in range(1, len(self.tokens)):
             if self.tokens[i].type == DIVIDE:

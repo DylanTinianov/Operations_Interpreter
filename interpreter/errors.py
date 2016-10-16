@@ -12,10 +12,3 @@ def type_error(type_):
 
 def operator_error(type_):
     raise Exception('Incorrect operator type:', type_)
-
-
-def bracket_error(open_close):
-    if open_close == 'close':
-        raise Exception('No closing bracket')
-    else:
-        raise Exception('No opening bracket')
