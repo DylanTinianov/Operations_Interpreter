@@ -64,7 +64,10 @@ class Interpreter(object):
         except IndexError:
             pass
 
-        self.left = int(num)
+        try:
+            self.left = int(num)
+        except ValueError:
+            raise type_error(type_=self.tokens[self.token_spot].value)
 
         # right side
         self.token_spot += 1
@@ -75,7 +78,11 @@ class Interpreter(object):
                 self.tokens.pop(self.token_spot)
         except IndexError:
             pass
-        self.right = int(num)
+
+        try:
+            self.right = int(num)
+        except ValueError:
+            raise type_error(type_=self.tokens[self.token_spot].value)
 
     def find_token_types(self):
         token_types = list()
@@ -85,56 +92,63 @@ class Interpreter(object):
 
     def retrieve_operator(self):
         token_types = self.find_token_types()
+        is_operator = False
 
         for i in range(1, len(self.tokens)):
-            if self.tokens[i].type == DIVIDE:
-                self.operator = DIVIDE
-                self.token_spot = i
-                break
+            if self.tokens[i].type in OPERATORS[1]:
+                is_operator = True
 
-            elif self.tokens[i].type == MULTIPLY:
-                self.operator = MULTIPLY
-                self.token_spot = i
-                if DIVIDE in token_types:
-                    continue
-                else:
+                if self.tokens[i].type == DIVIDE:
+                    self.operator = DIVIDE
+                    self.token_spot = i
                     break
 
-            elif self.tokens[i].type == MOD:
-                self.operator = MOD
-                self.token_spot = i
-                cont = False
-                for typ in [DIVIDE, MULTIPLY]:
-                    if typ in token_types:
-                        cont = True
-                if cont:
-                    continue
-                else:
-                    break
+                elif self.tokens[i].type == MULTIPLY:
+                    self.operator = MULTIPLY
+                    self.token_spot = i
+                    if DIVIDE in token_types:
+                        continue
+                    else:
+                        break
 
-            elif self.tokens[i].type == PLUS:
-                self.operator = PLUS
-                self.token_spot = i
-                cont = False
-                for typ in [DIVIDE, MULTIPLY, MOD]:
-                    if typ in token_types:
-                        cont = True
-                if cont:
-                    continue
-                else:
-                    break
+                elif self.tokens[i].type == MOD:
+                    self.operator = MOD
+                    self.token_spot = i
+                    cont = False
+                    for typ in [DIVIDE, MULTIPLY]:
+                        if typ in token_types:
+                            cont = True
+                    if cont:
+                        continue
+                    else:
+                        break
 
-            elif self.tokens[i].type == MINUS:
-                self.operator = MINUS
-                self.token_spot = i
-                cont = False
-                for typ in [DIVIDE, MULTIPLY, MOD, PLUS]:
-                    if typ in token_types:
-                        cont = True
-                if cont:
-                    continue
-                else:
-                    break
+                elif self.tokens[i].type == PLUS:
+                    self.operator = PLUS
+                    self.token_spot = i
+                    cont = False
+                    for typ in [DIVIDE, MULTIPLY, MOD]:
+                        if typ in token_types:
+                            cont = True
+                    if cont:
+                        continue
+                    else:
+                        break
+
+                elif self.tokens[i].type == MINUS:
+                    self.operator = MINUS
+                    self.token_spot = i
+                    cont = False
+                    for typ in [DIVIDE, MULTIPLY, MOD, PLUS]:
+                        if typ in token_types:
+                            cont = True
+                    if cont:
+                        continue
+                    else:
+                        break
+
+        if is_operator is False:
+            raise operator_error(type_='NO OPERATOR')
 
     def pass_space(self):
         while self.current_token.type is SPACE:
