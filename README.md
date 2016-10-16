@@ -18,7 +18,7 @@ To exit the program, simply type 'exit':
 >>> exit
 ```
 
-#### Example Usage
+### Example Usage
 Input can be placed in any order, and spaces are ignored
 
 No limit to the number of operations per line
