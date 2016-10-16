@@ -77,10 +77,14 @@ class Interpreter(object):
             pass
         self.right = int(num)
 
-    def retrieve_operator(self):
+    def find_token_types(self):
         token_types = list()
         for i in self.tokens:
             token_types.append(i.type)
+        return token_types
+
+    def retrieve_operator(self):
+        token_types = self.find_token_types()
 
         for i in range(1, len(self.tokens)):
             if self.tokens[i].type == DIVIDE:
@@ -158,9 +162,7 @@ class Interpreter(object):
             self.total_output += (self.left % self.right)
 
         if len(self.tokens) > 2:
-            token_types = list()
-            for i in self.tokens:
-                token_types.append(i.type)
+            token_types = self.find_token_types()
             num_ops = 0
             for i in token_types:
                 if i in OPERATORS[1]:
