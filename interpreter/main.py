@@ -6,7 +6,7 @@ def main():
         interp_ = Interpreter(text=raw_input('>>> '))
         if interp_.exit_interp():
             return
-        print(interp_.expr())
+        interp_.parse_input()
 
 
 if __name__ == '__main__':
