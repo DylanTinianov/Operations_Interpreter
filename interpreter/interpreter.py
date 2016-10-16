@@ -1,9 +1,3 @@
-""" TODO:
-    Allow for multiple operations on a line,
-    Create an array to store operations, and proceed follow a proper order of operations
-    REMOVE USED TOKENS (INTS AND OPERATORS) THEN REPEAT PROCESS.
-"""
-
 from constants import *
 from errors import *
 
@@ -27,6 +21,8 @@ class Interpreter(object):
         self.left = 0
         self.right = 0
         self.operator = None
+        self.left_spot = 0
+        self.last_operator = None
 
     def exit_interp(self):
         return 1 if self.input_text == 'exit' else 0
@@ -59,13 +55,15 @@ class Interpreter(object):
 
         # left side
         self.token_spot += 1
+        self.left_spot = self.token_spot
         num = ''
         try:
             while self.tokens[self.token_spot].type == INT:
-                num += self.tokens[self.token_spot].value
-                self.token_spot += 1
+                num += str(self.tokens[self.token_spot].value)
+                self.tokens.pop(self.token_spot)
         except IndexError:
             pass
+
         self.left = int(num)
 
         # right side
@@ -73,29 +71,67 @@ class Interpreter(object):
         num = ''
         try:
             while self.tokens[self.token_spot].type == INT:
-                num += self.tokens[self.token_spot].value
-                self.token_spot += 1
+                num += str(self.tokens[self.token_spot].value)
+                self.tokens.pop(self.token_spot)
         except IndexError:
             pass
         self.right = int(num)
 
     def retrieve_operator(self):
+        token_types = list()
+        for i in self.tokens:
+            token_types.append(i.type)
+        print token_types
+
         for i in range(1, len(self.tokens)):
             if self.tokens[i].type == DIVIDE:
                 self.operator = DIVIDE
                 self.token_spot = i
+                break
+
             elif self.tokens[i].type == MULTIPLY:
                 self.operator = MULTIPLY
                 self.token_spot = i
+                if DIVIDE in token_types:
+                    continue
+                else:
+                    break
+
             elif self.tokens[i].type == MOD:
                 self.operator = MOD
                 self.token_spot = i
+                cont = False
+                for typ in [DIVIDE, MULTIPLY]:
+                    if typ in token_types:
+                        cont = True
+                if cont:
+                    continue
+                else:
+                    break
+
             elif self.tokens[i].type == PLUS:
                 self.operator = PLUS
                 self.token_spot = i
+                cont = False
+                for typ in [DIVIDE, MULTIPLY, MOD]:
+                    if typ in token_types:
+                        cont = True
+                if cont:
+                    continue
+                else:
+                    break
+
             elif self.tokens[i].type == MINUS:
                 self.operator = MINUS
                 self.token_spot = i
+                cont = False
+                for typ in [DIVIDE, MULTIPLY, MOD, PLUS]:
+                    if typ in token_types:
+                        cont = True
+                if cont:
+                    continue
+                else:
+                    break
 
     def pass_space(self):
         while self.current_token.type is SPACE:
@@ -111,26 +147,27 @@ class Interpreter(object):
             self.current_token = self.token_advance()
 
     def expr(self):
-        while len(self.tokens) > 2:
+        if self.operator == PLUS:
+            self.total_output += self.left + self.right
+        elif self.operator == MINUS:
+            self.total_output += (self.left - self.right)
+        elif self.operator == MULTIPLY:
+            self.total_output += (self.left * self.right)
+        elif self.operator == DIVIDE:
+            self.total_output += (self.left / self.right)
+        elif self.operator == MOD:
+            self.total_output += (self.left % self.right)
 
-            if self.operator == PLUS:
-                self.total_output = self.left + self.right
-            elif self.operator == MINUS:
-                self.total_output = self.left - self.right
-            elif self.operator == MULTIPLY:
-                self.total_output = self.left * self.right
-            elif self.operator == DIVIDE:
-                self.total_output = self.left / self.right
-            elif self.operator == MOD:
-                self.total_output = self.left % self.right
+        if len(self.tokens) > 2:
+            token_types = list()
+            for i in self.tokens:
+                token_types.append(i.type)
+            num_ops = 0
+            for i in token_types:
+                if i in OPERATORS[1]:
+                    num_ops += 1
 
-
-if __name__ == '__main__':
-    interp_ = Interpreter(text=raw_input('>>> '))
-    interp_.parse_input()
-
-    interp_.retrieve_operator()
-    interp_.retrieve_num()
-    print interp_.left, interp_.operator, interp_.right
-    interp_.expr()
-    print interp_.total_output
+            self.tokens.pop(self.left_spot)     # pop out operator
+            self.tokens.insert(self.left_spot, Token(typ=INT, val=self.total_output))   # insert new total
+            if len(self.tokens) >= 4:
+                self.total_output = 0
