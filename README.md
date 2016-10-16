@@ -1,5 +1,5 @@
 # Interpreter
-Interpreter for multiple basic integer operations on one-line
+This Software is a continuously running interpreter capable of computing and printing multiple integer operations
 
 ### Operations
 This Interpreter can compute the following:
