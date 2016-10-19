@@ -13,6 +13,22 @@ The program will be polite about incorrect inputs
 
 <img src="https://github.com/DylanTinianov/Images/blob/master/Interpreter/error_handling.png" width="200" height="200" />
 
+This is accomplished through creating custom errors and exceptions
+
+For example:
+
+``` Python
+def symbol_error(symbol):
+    raise SymbolException(symbol=symbol)
+
+class SymbolException(Exception):
+    def __init__(self, symbol):
+        self.symbol = symbol
+        self.__str__()
+
+    def __str__(self):
+        print 'Symbol', self.symbol, ' usage not allowed'
+```
 ### Linux
 To run the interpreter, run the following in project root
 ```bash
