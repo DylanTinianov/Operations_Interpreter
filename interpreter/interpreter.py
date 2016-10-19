@@ -1,5 +1,5 @@
 from constants import *
-from errors import *
+from errors_and_exceptions import *
 
 
 class Token(object):
@@ -148,7 +148,7 @@ class Interpreter(object):
                         break
 
         if is_operator is False:
-            raise operator_error(type_='NO OPERATOR')
+            raise operator_error()
 
     def pass_space(self):
         while self.current_token.type is SPACE:
