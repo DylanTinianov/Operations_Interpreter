@@ -22,7 +22,6 @@ class Interpreter(object):
         self.right = 0
         self.operator = None
         self.left_spot = 0
-        self.last_operator = None
 
     def exit_interp(self):
         return 1 if self.input_text == 'exit' else 0

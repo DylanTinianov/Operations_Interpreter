@@ -12,25 +12,14 @@ def operator_error():
 
 class SymbolException(Exception):
     def __init__(self, symbol):
-        self.symbol = symbol
-        self.__str__()
-
-    def __str__(self):
-        print 'Symbol', self.symbol, ' usage not allowed'
+        print 'Symbol', symbol, ' usage not allowed'
 
 
 class TypeException(Exception):
     def __init__(self, type_):
-        self.type_ = type_
-        self.__str__()
-
-    def __str__(self):
-        print 'Incorrect usage of type:', self.type_
+        print 'Incorrect usage of type:', type_
 
 
 class OperatorException(Exception):
     def __init__(self):
-        self.__str__()
-
-    def __str__(self):
         print 'No operator was entered'
