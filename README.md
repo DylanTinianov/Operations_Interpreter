@@ -11,7 +11,7 @@ Standard order of operations will be followed
 ### Syntax Guide
 Input can be placed in any order, and spaces are ignored
 
-No limit to the number of operations per line
+No limit to the number of operations per line or number size
 
 Simple example:
 
