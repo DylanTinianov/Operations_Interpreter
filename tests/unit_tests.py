@@ -4,9 +4,10 @@ from test_cases import *
 
 
 class OperatorTests(unittest.TestCase):
+
     def test_addition(self):
         interp_ = Interpreter(text='987 + 1247')
-        self.assertEqual(interp_.expr(), 987+1247)
+        self.assertEqual(interp_.expr(), 987 + 1247)
 
     def test_subtraction(self):
         interp_ = Interpreter(text='987 - 1247')

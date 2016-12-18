@@ -3,12 +3,14 @@ from errors_and_exceptions import *
 
 
 class Token(object):
+
     def __init__(self, typ, val):
         self.type = typ
         self.value = val
 
 
 class Interpreter(object):
+
     def __init__(self, text):
         self.input_text = text
         self.input_len = len(self.input_text)
@@ -33,7 +35,8 @@ class Interpreter(object):
 
             elif self.input_text[self.pos] in OPERATORS[0]:
                 index = OPERATORS[0].index(self.input_text[self.pos])
-                self.current_token = Token(OPERATORS[1][index], OPERATORS[0][index])
+                self.current_token = Token(
+                    OPERATORS[1][index], OPERATORS[0][index])
 
             elif self.input_text[self.pos] == ' ':
                 self.current_token = Token(SPACE, ' ')
@@ -182,6 +185,7 @@ class Interpreter(object):
                     num_ops += 1
 
             self.tokens.pop(self.left_spot)     # pop out operator
-            self.tokens.insert(self.left_spot, Token(typ=INT, val=self.total_output))   # insert new total
+            self.tokens.insert(self.left_spot, Token(
+                typ=INT, val=self.total_output))   # insert new total
             if len(self.tokens) >= 4:
                 self.total_output = 0
