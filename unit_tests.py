@@ -1,6 +1,6 @@
 import pytest
 from interpreter import *
-from test_cases import *
+from tests.test_cases import *
 
 
 class TestOperator:
@@ -58,3 +58,7 @@ class TestOperator:
                 interp_.retrieve_operator()
                 interp_.retrieve_num()
                 interp_.expr()
+
+    def test_exit(self):
+        interp_ = Interpreter(text="exit")
+        assert interp_.exit_interp()
