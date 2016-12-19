@@ -1,5 +1,4 @@
-<img src="https://github.com/DylanTinianov/Images/blob/master/Logo/logo_black.png"/ width="40">
-# Operations Interpreter
+# Operations Interpreter  [![Build Status](https://travis-ci.org/DylanTinianov/Operations_Interpreter.svg?branch=master)](https://travis-ci.org/DylanTinianov/Operations_Interpreter)  <img src="https://github.com/DylanTinianov/Images/blob/master/Logo/logo_black.png"/ width="40">
 This Software is a continuously running interpreter capable of computing and printing multiple integer operations
 
 ### Operations
