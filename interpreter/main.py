@@ -7,7 +7,7 @@ def main():
         try:
             interp_ = Interpreter(text=raw_input('>>> '))
             if interp_.exit_interp():
-                break
+                return 0
 
             interp_.parse_input()
 
